@@ -1,5 +1,6 @@
 import 'package:docklands_dojo/models/belt_rank.dart';
 import 'package:docklands_dojo/models/quiz.dart';
+import 'package:docklands_dojo/result.dart';
 import 'package:docklands_dojo/services/quiz_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

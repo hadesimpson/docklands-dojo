@@ -56,9 +56,10 @@ class _FlashcardWidgetState extends State<FlashcardWidget>
       vsync: this,
       duration: const Duration(milliseconds: 400),
     );
-    _animation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _animation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
     _controller.addListener(() {
       // Swap front/back at the midpoint of the animation.
@@ -94,13 +95,12 @@ class _FlashcardWidgetState extends State<FlashcardWidget>
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return GestureDetector(
       onTap: widget.onFlip,
       child: AnimatedBuilder(
         animation: _animation,
         builder: (context, child) {
+          final theme = Theme.of(context);
           final angle = _animation.value * math.pi;
           return Transform(
             alignment: Alignment.center,
@@ -120,12 +120,12 @@ class _FlashcardWidgetState extends State<FlashcardWidget>
 
     return Transform(
       alignment: Alignment.center,
-      transform: isBack ? (Matrix4.identity()..rotateY(math.pi)) : Matrix4.identity(),
+      transform: isBack
+          ? (Matrix4.identity()..rotateY(math.pi))
+          : Matrix4.identity(),
       child: Card(
         elevation: 4,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: Container(
           width: double.infinity,
           constraints: const BoxConstraints(minHeight: 250),
@@ -136,10 +136,7 @@ class _FlashcardWidgetState extends State<FlashcardWidget>
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: _showFront
-                  ? [
-                      theme.colorScheme.surface,
-                      theme.colorScheme.surface,
-                    ]
+                  ? [theme.colorScheme.surface, theme.colorScheme.surface]
                   : [
                       theme.colorScheme.primaryContainer,
                       theme.colorScheme.secondaryContainer,

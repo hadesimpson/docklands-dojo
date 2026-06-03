@@ -1010,7 +1010,8 @@ const List<FlashCard> allFlashCards = [
   FlashCard(
     id: 'kata_tensho',
     front: 'What is "Tensho" kata?',
-    back: 'Rotating Palms — soft/circular breathing kata, complement to Sanchin',
+    back:
+        'Rotating Palms — soft/circular breathing kata, complement to Sanchin',
     category: CardCategory.kataSequence,
     minimumRank: BeltRank.kyu3,
   ),
@@ -1441,7 +1442,8 @@ const List<FlashCard> allFlashCards = [
   FlashCard(
     id: 'kum_jiyu',
     front: 'What is "Jiyu kumite"?',
-    back: 'Free sparring — full-contact, unrestricted techniques (within rules)',
+    back:
+        'Free sparring — full-contact, unrestricted techniques (within rules)',
     category: CardCategory.kumiteRules,
     minimumRank: BeltRank.kyu7,
   ),
@@ -1588,14 +1590,16 @@ const List<FlashCard> allFlashCards = [
   FlashCard(
     id: 'term_ido_geiko',
     front: 'What does "Ido geiko" mean?',
-    back: 'Moving practice — performing techniques while moving across the floor',
+    back:
+        'Moving practice — performing techniques while moving across the floor',
     category: CardCategory.terminology,
     minimumRank: BeltRank.kyu10,
   ),
   FlashCard(
     id: 'term_bunkai',
     front: 'What does "Bunkai" mean?',
-    back: 'Application analysis — practical self-defense interpretation of kata moves',
+    back:
+        'Application analysis — practical self-defense interpretation of kata moves',
     category: CardCategory.terminology,
     minimumRank: BeltRank.kyu7,
   ),
@@ -1616,5 +1620,115 @@ const List<FlashCard> allFlashCards = [
         'after executing a technique',
     category: CardCategory.terminology,
     minimumRank: BeltRank.kyu9,
+  ),
+
+  // ============================================================
+  // ADDITIONAL TERMINOLOGY & BODY PARTS (15 cards)
+  // ============================================================
+  FlashCard(
+    id: 'term_seiken',
+    front: 'What does "Seiken" mean?',
+    back: 'Forefist — striking with the front two knuckles',
+    category: CardCategory.terminology,
+    minimumRank: BeltRank.kyu10,
+  ),
+  FlashCard(
+    id: 'term_uraken',
+    front: 'What does "Uraken" mean?',
+    back: 'Backfist — striking with the back of the knuckles',
+    category: CardCategory.terminology,
+    minimumRank: BeltRank.kyu10,
+  ),
+  FlashCard(
+    id: 'term_shuto',
+    front: 'What does "Shuto" mean?',
+    back: 'Knife hand — striking with the edge of the open hand',
+    category: CardCategory.terminology,
+    minimumRank: BeltRank.kyu10,
+  ),
+  FlashCard(
+    id: 'term_tettsui',
+    front: 'What does "Tettsui" mean?',
+    back: 'Hammer fist — striking with the bottom of the fist',
+    category: CardCategory.terminology,
+    minimumRank: BeltRank.kyu9,
+  ),
+  FlashCard(
+    id: 'term_shotei',
+    front: 'What does "Shotei" mean?',
+    back: 'Palm heel — the base/heel of the palm',
+    category: CardCategory.terminology,
+    minimumRank: BeltRank.kyu9,
+  ),
+  FlashCard(
+    id: 'term_koken',
+    front: 'What does "Kōken" mean?',
+    back: 'Bent wrist — striking with the top of the bent wrist',
+    category: CardCategory.terminology,
+    minimumRank: BeltRank.kyu7,
+  ),
+  FlashCard(
+    id: 'term_haisoku',
+    front: 'What does "Haisoku" mean?',
+    back: 'Instep — the top of the foot, used in mawashi geri',
+    category: CardCategory.terminology,
+    minimumRank: BeltRank.kyu10,
+  ),
+  FlashCard(
+    id: 'term_chusoku',
+    front: 'What does "Chūsoku" mean?',
+    back: 'Ball of the foot — the striking surface for mae geri',
+    category: CardCategory.terminology,
+    minimumRank: BeltRank.kyu10,
+  ),
+  FlashCard(
+    id: 'term_sokuto',
+    front: 'What does "Sokutō" mean?',
+    back: 'Foot edge/blade — the outer edge of the foot, used in yoko geri',
+    category: CardCategory.terminology,
+    minimumRank: BeltRank.kyu9,
+  ),
+  FlashCard(
+    id: 'term_kakato',
+    front: 'What does "Kakato" mean?',
+    back: 'Heel — used in ushiro geri and axe kicks',
+    category: CardCategory.terminology,
+    minimumRank: BeltRank.kyu9,
+  ),
+  FlashCard(
+    id: 'term_keage',
+    front: 'What does "Keage" mean?',
+    back: 'Snap kick — a fast, snapping kick that retracts quickly',
+    category: CardCategory.terminology,
+    minimumRank: BeltRank.kyu10,
+  ),
+  FlashCard(
+    id: 'term_kekomi',
+    front: 'What does "Kekomi" mean?',
+    back: 'Thrust kick — a powerful, pushing-through kick',
+    category: CardCategory.terminology,
+    minimumRank: BeltRank.kyu10,
+  ),
+  FlashCard(
+    id: 'term_tobi',
+    front: 'What does "Tobi" mean?',
+    back: 'Jumping/flying — a technique performed while airborne',
+    category: CardCategory.terminology,
+    minimumRank: BeltRank.kyu7,
+  ),
+  FlashCard(
+    id: 'term_morote',
+    front: 'What does "Morote" mean?',
+    back: 'Double-handed / augmented — using both hands together',
+    category: CardCategory.terminology,
+    minimumRank: BeltRank.kyu8,
+  ),
+  FlashCard(
+    id: 'term_jodan_uke_reverse',
+    front: 'What is "Jōdan" level in Kyokushin?',
+    back: 'Upper level — head and face area (above the shoulders)',
+    hint: 'The highest striking zone',
+    category: CardCategory.terminology,
+    minimumRank: BeltRank.kyu10,
   ),
 ];

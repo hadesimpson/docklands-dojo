@@ -23,9 +23,7 @@ void main() {
 
   group('FlashcardWidget', () {
     testWidgets('renders front content when not flipped', (tester) async {
-      await tester.pumpWidget(
-        buildTestWidget(isFlipped: false, onFlip: () {}),
-      );
+      await tester.pumpWidget(buildTestWidget(isFlipped: false, onFlip: () {}));
 
       expect(find.text('Front Text'), findsOneWidget);
       expect(find.text('Tap to reveal'), findsOneWidget);
@@ -51,9 +49,7 @@ void main() {
     });
 
     testWidgets('shows back content when isFlipped is true', (tester) async {
-      await tester.pumpWidget(
-        buildTestWidget(isFlipped: true, onFlip: () {}),
-      );
+      await tester.pumpWidget(buildTestWidget(isFlipped: true, onFlip: () {}));
       await tester.pumpAndSettle();
 
       expect(find.text('Back Text'), findsOneWidget);
@@ -105,9 +101,7 @@ void main() {
     });
 
     testWidgets('renders with minimum height constraint', (tester) async {
-      await tester.pumpWidget(
-        buildTestWidget(isFlipped: false, onFlip: () {}),
-      );
+      await tester.pumpWidget(buildTestWidget(isFlipped: false, onFlip: () {}));
 
       // The card should exist and be rendered.
       final cardFinder = find.byType(Card);
@@ -115,17 +109,13 @@ void main() {
     });
 
     testWidgets('shows help icon on front', (tester) async {
-      await tester.pumpWidget(
-        buildTestWidget(isFlipped: false, onFlip: () {}),
-      );
+      await tester.pumpWidget(buildTestWidget(isFlipped: false, onFlip: () {}));
 
       expect(find.byIcon(Icons.help_outline), findsOneWidget);
     });
 
     testWidgets('shows check icon on back', (tester) async {
-      await tester.pumpWidget(
-        buildTestWidget(isFlipped: true, onFlip: () {}),
-      );
+      await tester.pumpWidget(buildTestWidget(isFlipped: true, onFlip: () {}));
       await tester.pumpAndSettle();
 
       expect(find.byIcon(Icons.check_circle_outline), findsOneWidget);

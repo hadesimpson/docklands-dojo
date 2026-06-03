@@ -47,10 +47,10 @@ void main() {
   }
 
   group('FlashcardScreen', () {
-    testWidgets('shows empty review screen when no cards due',
-        (tester) async {
-      when(() => mockService.getDueCards(any()))
-          .thenAnswer((_) async => const Success([]));
+    testWidgets('shows empty review screen when no cards due', (tester) async {
+      when(
+        () => mockService.getDueCards(any()),
+      ).thenAnswer((_) async => const Success([]));
 
       await tester.pumpWidget(buildTestWidget());
       await tester.pumpAndSettle();
@@ -61,10 +61,8 @@ void main() {
 
     testWidgets('shows loading indicator initially', (tester) async {
       when(() => mockService.getDueCards(any())).thenAnswer(
-        (_) => Future.delayed(
-          const Duration(seconds: 1),
-          () => const Success([]),
-        ),
+        (_) =>
+            Future.delayed(const Duration(seconds: 1), () => const Success([])),
       );
 
       await tester.pumpWidget(buildTestWidget());
@@ -73,8 +71,9 @@ void main() {
     });
 
     testWidgets('shows error state on failure', (tester) async {
-      when(() => mockService.getDueCards(any()))
-          .thenAnswer((_) async => const Failure('Database error'));
+      when(
+        () => mockService.getDueCards(any()),
+      ).thenAnswer((_) async => const Failure('Database error'));
 
       await tester.pumpWidget(buildTestWidget());
       await tester.pumpAndSettle();
@@ -88,8 +87,9 @@ void main() {
       final firstCard = allFlashCards.first;
       final dueCard = createDueCard(firstCard.id);
 
-      when(() => mockService.getDueCards(any()))
-          .thenAnswer((_) async => Success([dueCard]));
+      when(
+        () => mockService.getDueCards(any()),
+      ).thenAnswer((_) async => Success([dueCard]));
 
       await tester.pumpWidget(buildTestWidget());
       await tester.pumpAndSettle();
@@ -105,8 +105,9 @@ void main() {
         createDueCard(allFlashCards[1].id),
       ];
 
-      when(() => mockService.getDueCards(any()))
-          .thenAnswer((_) async => Success(cards));
+      when(
+        () => mockService.getDueCards(any()),
+      ).thenAnswer((_) async => Success(cards));
 
       await tester.pumpWidget(buildTestWidget());
       await tester.pumpAndSettle();
@@ -122,8 +123,9 @@ void main() {
       final firstCard = allFlashCards.first;
       final dueCard = createDueCard(firstCard.id);
 
-      when(() => mockService.getDueCards(any()))
-          .thenAnswer((_) async => Success([dueCard]));
+      when(
+        () => mockService.getDueCards(any()),
+      ).thenAnswer((_) async => Success([dueCard]));
 
       await tester.pumpWidget(buildTestWidget());
       await tester.pumpAndSettle();
@@ -147,17 +149,16 @@ void main() {
         createDueCard(allFlashCards[1].id),
       ];
 
-      when(() => mockService.getDueCards(any()))
-          .thenAnswer((_) async => Success(cards));
+      when(
+        () => mockService.getDueCards(any()),
+      ).thenAnswer((_) async => Success(cards));
       when(
         () => mockService.reviewCard(
           cardId: any(named: 'cardId'),
           quality: any(named: 'quality'),
           now: any(named: 'now'),
         ),
-      ).thenAnswer(
-        (_) async => Success(cards[0]),
-      );
+      ).thenAnswer((_) async => Success(cards[0]));
 
       await tester.pumpWidget(buildTestWidget());
       await tester.pumpAndSettle();
@@ -263,9 +264,7 @@ void main() {
 
   group('EmptyReviewScreen', () {
     testWidgets('renders celebration and message', (tester) async {
-      await tester.pumpWidget(
-        const MaterialApp(home: EmptyReviewScreen()),
-      );
+      await tester.pumpWidget(const MaterialApp(home: EmptyReviewScreen()));
 
       expect(find.text('🎉'), findsOneWidget);
       expect(find.text('All caught up!'), findsOneWidget);

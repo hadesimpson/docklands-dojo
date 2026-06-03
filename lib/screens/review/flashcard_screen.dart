@@ -2,7 +2,6 @@ import 'package:docklands_dojo/data/flashcards_data.dart';
 import 'package:docklands_dojo/database/daos/review_dao.dart';
 import 'package:docklands_dojo/providers/review_providers.dart';
 import 'package:docklands_dojo/result.dart';
-import 'package:docklands_dojo/services/srs/review_service.dart';
 import 'package:docklands_dojo/widgets/flashcard_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -183,8 +182,7 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen> {
             // Progress bar.
             LinearProgressIndicator(
               value: progress,
-              backgroundColor:
-                  theme.colorScheme.surfaceContainerHighest,
+              backgroundColor: theme.colorScheme.surfaceContainerHighest,
               color: theme.colorScheme.primary,
               minHeight: 4,
             ),
@@ -225,8 +223,9 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen> {
                       Text(
                         'Tap the card to reveal the answer',
                         style: theme.textTheme.bodyMedium?.copyWith(
-                          color: theme.colorScheme.onSurface
-                              .withValues(alpha: 0.6),
+                          color: theme.colorScheme.onSurface.withValues(
+                            alpha: 0.6,
+                          ),
                         ),
                       ),
 
@@ -244,10 +243,7 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen> {
   Widget _buildQualityButtons(ThemeData theme) {
     return Column(
       children: [
-        Text(
-          'How well did you know this?',
-          style: theme.textTheme.titleSmall,
-        ),
+        Text('How well did you know this?', style: theme.textTheme.titleSmall),
         const SizedBox(height: 12),
         Wrap(
           spacing: 8,
@@ -319,10 +315,7 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen> {
             ),
             child: Text(
               label,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ),
           const SizedBox(height: 4),
@@ -365,8 +358,9 @@ class ReviewSummaryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final retentionRate =
-        cardsReviewed > 0 ? (correctCount / cardsReviewed * 100) : 0.0;
+    final retentionRate = cardsReviewed > 0
+        ? (correctCount / cardsReviewed * 100)
+        : 0.0;
     final minutes = duration.inMinutes;
     final seconds = duration.inSeconds % 60;
 
@@ -387,14 +381,14 @@ class ReviewSummaryScreen extends StatelessWidget {
                   retentionRate >= 80
                       ? Icons.celebration
                       : retentionRate >= 50
-                          ? Icons.thumb_up
-                          : Icons.school,
+                      ? Icons.thumb_up
+                      : Icons.school,
                   size: 64,
                   color: retentionRate >= 80
                       ? Colors.amber
                       : retentionRate >= 50
-                          ? Colors.green
-                          : theme.colorScheme.primary,
+                      ? Colors.green
+                      : theme.colorScheme.primary,
                 ),
                 const SizedBox(height: 24),
 
@@ -402,8 +396,8 @@ class ReviewSummaryScreen extends StatelessWidget {
                   retentionRate >= 80
                       ? 'Excellent work! 🔥'
                       : retentionRate >= 50
-                          ? 'Good effort! 💪'
-                          : 'Keep training! 🥋',
+                      ? 'Good effort! 💪'
+                      : 'Keep training! 🥋',
                   style: theme.textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -468,9 +462,7 @@ class ReviewSummaryScreen extends StatelessWidget {
           children: [
             Icon(icon, color: theme.colorScheme.primary),
             const SizedBox(width: 12),
-            Expanded(
-              child: Text(label, style: theme.textTheme.bodyLarge),
-            ),
+            Expanded(child: Text(label, style: theme.textTheme.bodyLarge)),
             Text(
               value,
               style: theme.textTheme.titleMedium?.copyWith(
@@ -503,10 +495,7 @@ class EmptyReviewScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                '🎉',
-                style: TextStyle(fontSize: 64),
-              ),
+              const Text('🎉', style: TextStyle(fontSize: 64)),
               const SizedBox(height: 24),
               Text(
                 'All caught up!',
@@ -519,8 +508,7 @@ class EmptyReviewScreen extends StatelessWidget {
                 'No cards are due for review right now.\n'
                 'Come back later to keep your streak going!',
                 style: theme.textTheme.bodyLarge?.copyWith(
-                  color:
-                      theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                 ),
                 textAlign: TextAlign.center,
               ),
