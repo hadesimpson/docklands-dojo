@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:docklands_dojo/database/app_database.dart';
-import 'package:docklands_dojo/database/daos/progress_dao.dart';
 import 'package:docklands_dojo/database/daos/quiz_dao.dart';
 import 'package:docklands_dojo/database/daos/review_dao.dart';
 import 'package:docklands_dojo/models/belt_rank.dart';
@@ -9,7 +8,6 @@ import 'package:docklands_dojo/models/user_progress.dart';
 import 'package:docklands_dojo/result.dart';
 import 'package:docklands_dojo/services/export_service.dart';
 import 'package:docklands_dojo/services/import_summary.dart';
-import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -260,10 +258,10 @@ void main() {
         'exportDate': DateTime.now().toUtc().toIso8601String(),
         'appVersion': '99.0.0',
         'progress': null,
-        'advancements': [],
-        'sessions': [],
-        'cardStates': [],
-        'quizAttempts': [],
+        'advancements': <dynamic>[],
+        'sessions': <dynamic>[],
+        'cardStates': <dynamic>[],
+        'quizAttempts': <dynamic>[],
       });
 
       final result = await exportService.importData(json);
@@ -279,10 +277,10 @@ void main() {
         'exportDate': DateTime.now().toUtc().toIso8601String(),
         'appVersion': '1.0.0',
         'progress': null,
-        'advancements': [],
-        'sessions': [],
-        'cardStates': [],
-        'quizAttempts': [],
+        'advancements': <dynamic>[],
+        'sessions': <dynamic>[],
+        'cardStates': <dynamic>[],
+        'quizAttempts': <dynamic>[],
       });
 
       final result = await exportService.importData(json);
@@ -301,12 +299,12 @@ void main() {
         'progress': {
           'currentRank': 'invalid_rank',
           'startDate': DateTime(2024, 1, 1).toUtc().toIso8601String(),
-          'completedTechniques': {},
+          'completedTechniques': <String, dynamic>{},
         },
-        'advancements': [],
-        'sessions': [],
-        'cardStates': [],
-        'quizAttempts': [],
+        'advancements': <dynamic>[],
+        'sessions': <dynamic>[],
+        'cardStates': <dynamic>[],
+        'quizAttempts': <dynamic>[],
       });
 
       final result = await exportService.importData(json);
@@ -330,7 +328,7 @@ void main() {
         'progress': {
           'currentRank': 'kyu10',
           'startDate': futureDate,
-          'completedTechniques': {},
+          'completedTechniques': <String, dynamic>{},
         },
         'advancements': [
           {
@@ -343,7 +341,7 @@ void main() {
         'sessions': [
           {'date': futureDate, 'durationMinutes': 60, 'notes': null},
         ],
-        'cardStates': [],
+        'cardStates': <dynamic>[],
         'quizAttempts': [
           {
             'timestamp': futureDate,
@@ -352,8 +350,8 @@ void main() {
             'totalQuestions': 5,
             'correctAnswers': 3,
             'durationSeconds': 120,
-            'categoryScores': {},
-            'weakAreas': [],
+            'categoryScores': <String, dynamic>{},
+            'weakAreas': <String>[],
           },
         ],
       });
@@ -373,10 +371,10 @@ void main() {
         'exportDate': DateTime.now().toUtc().toIso8601String(),
         'appVersion': '1.0.0',
         'progress': null,
-        'advancements': [],
-        'sessions': [],
-        'cardStates': [],
-        'quizAttempts': [],
+        'advancements': <dynamic>[],
+        'sessions': <dynamic>[],
+        'cardStates': <dynamic>[],
+        'quizAttempts': <dynamic>[],
       });
 
       final result = await exportService.importData(json);
@@ -413,10 +411,10 @@ void main() {
           'startDate': DateTime(2022, 1, 1).toUtc().toIso8601String(),
           'completedTechniques': {'new_technique': true},
         },
-        'advancements': [],
-        'sessions': [],
-        'cardStates': [],
-        'quizAttempts': [],
+        'advancements': <dynamic>[],
+        'sessions': <dynamic>[],
+        'cardStates': <dynamic>[],
+        'quizAttempts': <dynamic>[],
       });
 
       final result = await exportService.importData(json);
@@ -439,8 +437,8 @@ void main() {
         'exportDate': DateTime.now().toUtc().toIso8601String(),
         'appVersion': '1.0.0',
         'progress': null,
-        'advancements': [],
-        'sessions': [],
+        'advancements': <dynamic>[],
+        'sessions': <dynamic>[],
         'cardStates': [
           {
             'cardId': 'low_ease',
@@ -453,7 +451,7 @@ void main() {
             'correctReviews': 0,
           },
         ],
-        'quizAttempts': [],
+        'quizAttempts': <dynamic>[],
       });
 
       final result = await exportService.importData(json);
