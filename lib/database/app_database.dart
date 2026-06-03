@@ -1,9 +1,7 @@
-import 'dart:convert';
-
-import 'package:drift/drift.dart';
 import 'package:docklands_dojo/database/daos/progress_dao.dart';
 import 'package:docklands_dojo/database/daos/quiz_dao.dart';
 import 'package:docklands_dojo/database/daos/review_dao.dart';
+import 'package:drift/drift.dart';
 
 part 'app_database.g.dart';
 

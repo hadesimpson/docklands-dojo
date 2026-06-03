@@ -5,7 +5,6 @@ import 'package:docklands_dojo/database/daos/review_dao.dart';
 import 'package:docklands_dojo/models/belt_rank.dart';
 import 'package:docklands_dojo/models/user_progress.dart';
 import 'package:docklands_dojo/result.dart';
-import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 
