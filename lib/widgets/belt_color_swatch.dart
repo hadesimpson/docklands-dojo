@@ -121,10 +121,11 @@ class _BeltSwatchPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()..style = PaintingStyle.fill;
+    final paint = Paint()
+      ..style = PaintingStyle.fill
+      ..color = primaryColor;
 
     // Draw primary belt color.
-    paint.color = primaryColor;
     canvas.drawRect(Offset.zero & size, paint);
 
     // Draw stripe if applicable.

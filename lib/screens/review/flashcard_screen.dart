@@ -101,8 +101,9 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen> {
     });
 
     // Invalidate providers so other screens see updated data.
-    ref.invalidate(dueCardsProvider);
-    ref.invalidate(reviewStatsProvider);
+    ref
+      ..invalidate(dueCardsProvider)
+      ..invalidate(reviewStatsProvider);
   }
 
   void _navigateToSummary() {
@@ -129,13 +130,18 @@ class _FlashcardScreenState extends ConsumerState<FlashcardScreen> {
     }
 
     if (_hasError) {
+      final theme = Theme.of(context);
       return Scaffold(
         appBar: AppBar(title: const Text('Review')),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.error_outline, size: 48, color: Colors.red),
+              Icon(
+                Icons.error_outline,
+                size: 48,
+                color: theme.colorScheme.error,
+              ),
               const SizedBox(height: 16),
               Text(_errorMessage),
               const SizedBox(height: 16),
@@ -370,77 +376,79 @@ class ReviewSummaryScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
       ),
       body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // Celebration icon.
-                Icon(
-                  retentionRate >= 80
-                      ? Icons.celebration
-                      : retentionRate >= 50
-                      ? Icons.thumb_up
-                      : Icons.school,
-                  size: 64,
-                  color: retentionRate >= 80
-                      ? Colors.amber
-                      : retentionRate >= 50
-                      ? Colors.green
-                      : theme.colorScheme.primary,
-                ),
-                const SizedBox(height: 24),
-
-                Text(
-                  retentionRate >= 80
-                      ? 'Excellent work! 🔥'
-                      : retentionRate >= 50
-                      ? 'Good effort! 💪'
-                      : 'Keep training! 🥋',
-                  style: theme.textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
+        child: SingleChildScrollView(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Celebration icon.
+                  Icon(
+                    retentionRate >= 80
+                        ? Icons.celebration
+                        : retentionRate >= 50
+                        ? Icons.thumb_up
+                        : Icons.school,
+                    size: 64,
+                    color: retentionRate >= 80
+                        ? Colors.amber
+                        : retentionRate >= 50
+                        ? Colors.green
+                        : theme.colorScheme.primary,
                   ),
-                ),
-                const SizedBox(height: 32),
+                  const SizedBox(height: 24),
 
-                // Stats cards.
-                _statRow(
-                  context,
-                  icon: Icons.style,
-                  label: 'Cards Reviewed',
-                  value: '$cardsReviewed',
-                ),
-                const SizedBox(height: 12),
-                _statRow(
-                  context,
-                  icon: Icons.check_circle,
-                  label: 'Correct',
-                  value: '$correctCount / $cardsReviewed',
-                ),
-                const SizedBox(height: 12),
-                _statRow(
-                  context,
-                  icon: Icons.pie_chart,
-                  label: 'Retention Rate',
-                  value: '${retentionRate.toStringAsFixed(0)}%',
-                ),
-                const SizedBox(height: 12),
-                _statRow(
-                  context,
-                  icon: Icons.timer,
-                  label: 'Duration',
-                  value: '${minutes}m ${seconds}s',
-                ),
+                  Text(
+                    retentionRate >= 80
+                        ? 'Excellent work! 🔥'
+                        : retentionRate >= 50
+                        ? 'Good effort! 💪'
+                        : 'Keep training! 🥋',
+                    style: theme.textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 32),
 
-                const SizedBox(height: 48),
+                  // Stats cards.
+                  _statRow(
+                    context,
+                    icon: Icons.style,
+                    label: 'Cards Reviewed',
+                    value: '$cardsReviewed',
+                  ),
+                  const SizedBox(height: 12),
+                  _statRow(
+                    context,
+                    icon: Icons.check_circle,
+                    label: 'Correct',
+                    value: '$correctCount / $cardsReviewed',
+                  ),
+                  const SizedBox(height: 12),
+                  _statRow(
+                    context,
+                    icon: Icons.pie_chart,
+                    label: 'Retention Rate',
+                    value: '${retentionRate.toStringAsFixed(0)}%',
+                  ),
+                  const SizedBox(height: 12),
+                  _statRow(
+                    context,
+                    icon: Icons.timer,
+                    label: 'Duration',
+                    value: '${minutes}m ${seconds}s',
+                  ),
 
-                FilledButton.icon(
-                  onPressed: () => Navigator.of(context).pop(),
-                  icon: const Icon(Icons.arrow_back),
-                  label: const Text('Done'),
-                ),
-              ],
+                  const SizedBox(height: 48),
+
+                  FilledButton.icon(
+                    onPressed: () => Navigator.of(context).pop(),
+                    icon: const Icon(Icons.arrow_back),
+                    label: const Text('Done'),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

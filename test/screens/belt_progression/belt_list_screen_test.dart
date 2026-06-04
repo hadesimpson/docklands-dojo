@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:docklands_dojo/data/syllabus_data.dart';
 import 'package:docklands_dojo/models/belt_rank.dart';
 import 'package:docklands_dojo/models/user_progress.dart';
@@ -54,8 +56,9 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      // Verify all 11 belt display names are present.
+      // ListView only renders visible items, so scroll to find each belt.
       for (final rank in BeltRank.values) {
+        await tester.scrollUntilVisible(find.text(rank.displayName), 200);
         expect(find.text(rank.displayName), findsAtLeast(1));
       }
     });
@@ -111,8 +114,10 @@ void main() {
       await tester.pumpAndSettle();
 
       // Each belt should have its Japanese name and color description.
+      // ListView only renders visible items, so scroll to find each.
       for (final rank in BeltRank.values) {
         final labelText = '${rank.japaneseName} — ${rank.colorDescription}';
+        await tester.scrollUntilVisible(find.text(labelText), 200);
         expect(find.text(labelText), findsAtLeast(1));
       }
     });
@@ -121,9 +126,7 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
-            currentProgressProvider.overrideWith(
-              () => _LoadingProgressNotifier(),
-            ),
+            currentProgressProvider.overrideWith(_LoadingProgressNotifier.new),
           ],
           child: const MaterialApp(home: BeltListScreen()),
         ),
@@ -136,9 +139,7 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
-            currentProgressProvider.overrideWith(
-              () => _ErrorProgressNotifier(),
-            ),
+            currentProgressProvider.overrideWith(_ErrorProgressNotifier.new),
           ],
           child: const MaterialApp(home: BeltListScreen()),
         ),
@@ -209,48 +210,48 @@ class _MockProgressNotifier extends AsyncNotifier<UserProgress?>
 
   @override
   Future<Result<void>> markTechniqueCompleted(String techniqueId) async =>
-      Success(null);
+      const Success(null);
 
   @override
-  Future<Result<void>> updateBelt(BeltRank rank) async => Success(null);
+  Future<Result<void>> updateBelt(BeltRank rank) async => const Success(null);
 
   @override
   Future<Result<void>> addTrainingSession(
     Duration duration, {
     String? notes,
-  }) async => Success(null);
+  }) async => const Success(null);
 
   @override
   Future<Result<void>> advanceBelt(BeltRank rank, {String? notes}) async =>
-      Success(null);
+      const Success(null);
 }
 
 /// Mock notifier that stays in loading state.
 class _LoadingProgressNotifier extends AsyncNotifier<UserProgress?>
     implements CurrentProgressNotifier {
   @override
-  Future<UserProgress?> build() async {
-    // Never complete — simulate loading.
-    await Future<void>.delayed(const Duration(hours: 1));
-    return null;
+  Future<UserProgress?> build() {
+    // Return a future that never completes — simulate loading
+    // without creating a timer (which would cause pending timer errors).
+    return Completer<UserProgress?>().future;
   }
 
   @override
   Future<Result<void>> markTechniqueCompleted(String techniqueId) async =>
-      Success(null);
+      const Success(null);
 
   @override
-  Future<Result<void>> updateBelt(BeltRank rank) async => Success(null);
+  Future<Result<void>> updateBelt(BeltRank rank) async => const Success(null);
 
   @override
   Future<Result<void>> addTrainingSession(
     Duration duration, {
     String? notes,
-  }) async => Success(null);
+  }) async => const Success(null);
 
   @override
   Future<Result<void>> advanceBelt(BeltRank rank, {String? notes}) async =>
-      Success(null);
+      const Success(null);
 }
 
 /// Mock notifier that throws an error.
@@ -263,18 +264,18 @@ class _ErrorProgressNotifier extends AsyncNotifier<UserProgress?>
 
   @override
   Future<Result<void>> markTechniqueCompleted(String techniqueId) async =>
-      Success(null);
+      const Success(null);
 
   @override
-  Future<Result<void>> updateBelt(BeltRank rank) async => Success(null);
+  Future<Result<void>> updateBelt(BeltRank rank) async => const Success(null);
 
   @override
   Future<Result<void>> addTrainingSession(
     Duration duration, {
     String? notes,
-  }) async => Success(null);
+  }) async => const Success(null);
 
   @override
   Future<Result<void>> advanceBelt(BeltRank rank, {String? notes}) async =>
-      Success(null);
+      const Success(null);
 }

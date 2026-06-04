@@ -12,7 +12,7 @@ void main() {
       List<String> weakAreas = const [],
       Map<String, double> categoryScores = const {},
     }) {
-      final total = 20;
+      const total = 20;
       final correct = (total * scorePercentage).round();
       return QuizAttemptResult(
         timestamp: DateTime(2024, 1, 15),

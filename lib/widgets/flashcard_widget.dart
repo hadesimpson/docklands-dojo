@@ -48,6 +48,9 @@ class _FlashcardWidgetState extends State<FlashcardWidget>
   late Animation<double> _animation;
   bool _showFront = true;
 
+  /// Tracks whether we are animating towards the back (true) or front (false).
+  bool _isForwardFlip = false;
+
   @override
   void initState() {
     super.initState();
@@ -55,24 +58,39 @@ class _FlashcardWidgetState extends State<FlashcardWidget>
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 400),
+      value: widget.isFlipped ? 1.0 : 0.0,
     );
     _animation = Tween<double>(
       begin: 0.0,
       end: 1.0,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
-    _controller.addListener(() {
-      // Swap front/back at the midpoint of the animation.
-      if (_controller.value >= 0.5 && _showFront == !widget.isFlipped) {
-        setState(() {
-          _showFront = widget.isFlipped;
-        });
-      } else if (_controller.value < 0.5 && _showFront == widget.isFlipped) {
-        setState(() {
-          _showFront = !widget.isFlipped;
-        });
-      }
-    });
+    _controller
+      ..addListener(() {
+        // Swap front/back at the midpoint of the animation.
+        if (_isForwardFlip && _controller.value >= 0.5 && _showFront) {
+          setState(() {
+            _showFront = false;
+          });
+        } else if (!_isForwardFlip && _controller.value < 0.5 && !_showFront) {
+          setState(() {
+            _showFront = true;
+          });
+        }
+      })
+      // Catch animation completion to handle cases where per-frame listener
+      // misses the 0.5 threshold (e.g., during pumpAndSettle in tests).
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.dismissed && !_showFront) {
+          setState(() {
+            _showFront = true;
+          });
+        } else if (status == AnimationStatus.completed && _showFront) {
+          setState(() {
+            _showFront = false;
+          });
+        }
+      });
   }
 
   @override
@@ -80,8 +98,10 @@ class _FlashcardWidgetState extends State<FlashcardWidget>
     super.didUpdateWidget(oldWidget);
     if (widget.isFlipped != oldWidget.isFlipped) {
       if (widget.isFlipped) {
+        _isForwardFlip = true;
         _controller.forward();
       } else {
+        _isForwardFlip = false;
         _controller.reverse();
       }
     }

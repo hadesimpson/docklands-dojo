@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:docklands_dojo/data/flashcards_data.dart';
 import 'package:docklands_dojo/database/daos/review_dao.dart';
 import 'package:docklands_dojo/providers/review_providers.dart';
@@ -60,10 +62,9 @@ void main() {
     });
 
     testWidgets('shows loading indicator initially', (tester) async {
-      when(() => mockService.getDueCards(any())).thenAnswer(
-        (_) =>
-            Future.delayed(const Duration(seconds: 1), () => const Success([])),
-      );
+      when(
+        () => mockService.getDueCards(any()),
+      ).thenAnswer((_) => Completer<Result<List<CardReviewState>>>().future);
 
       await tester.pumpWidget(buildTestWidget());
 

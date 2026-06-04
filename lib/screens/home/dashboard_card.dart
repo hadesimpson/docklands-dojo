@@ -95,7 +95,7 @@ class DashboardCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                if (trailing != null) trailing!,
+                ?trailing,
                 if (onTap != null)
                   Icon(
                     Icons.chevron_right,

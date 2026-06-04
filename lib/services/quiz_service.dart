@@ -215,7 +215,10 @@ class QuizService {
     final categoryName = technique.category.name;
 
     // Type A: "What is the English name for [Japanese]?" (MC)
-    final wrongAnswers = _getDistractors(technique, 3);
+    final wrongAnswers = _getDistractors(
+      technique,
+      3,
+    ).where((answer) => answer != technique.englishName).take(3).toList();
     if (wrongAnswers.length >= 3) {
       final options = [technique.englishName, ...wrongAnswers]
         ..shuffle(_random);
@@ -383,12 +386,13 @@ class QuizService {
 
       // "How many moves in [kata]?" (MC) - only for required kata
       if (requiredKataIds.contains(kata.id)) {
-        final wrongCounts = [
-          kata.moveCount + 2,
-          kata.moveCount - 2,
-          kata.moveCount + 5,
-        ].map((c) => c.clamp(1, 200).toString()).toList();
-        final options = [kata.moveCount.toString(), ...wrongCounts]
+        final wrongCounts = <String>{};
+        for (final offset in [2, -2, 5, -5, 3, -3, 7]) {
+          final count = (kata.moveCount + offset).clamp(1, 200).toString();
+          if (count != kata.moveCount.toString()) wrongCounts.add(count);
+          if (wrongCounts.length >= 3) break;
+        }
+        final options = [kata.moveCount.toString(), ...wrongCounts.take(3)]
           ..shuffle(_random);
         questions.add(
           QuizQuestion(

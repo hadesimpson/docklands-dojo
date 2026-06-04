@@ -487,7 +487,13 @@ void main() {
     test('records advancement and updates rank', () async {
       final progress = UserProgress(
         currentRank: BeltRank.kyu10,
-        completedTechniques: const {'technique_a': true},
+        completedTechniques: const {
+          'technique_a': true,
+          'technique_b': true,
+          'technique_d': true,
+          'kata_a': true,
+          'kata_b': true,
+        },
         advancementHistory: const [],
         trainingLog: const [],
         startDate: DateTime(2024),
@@ -539,7 +545,10 @@ void main() {
 
       final result = await service.advanceBelt(BeltRank.kyu9);
       expect(result, isA<Failure<void>>());
-      expect((result as Failure<void>).message, contains('No progress found'));
+      expect(
+        (result as Failure<void>).message,
+        contains('Prerequisites not met'),
+      );
     });
 
     test('returns Failure when advancement insert fails', () async {

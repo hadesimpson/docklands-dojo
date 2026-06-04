@@ -82,7 +82,11 @@ class SettingsScreen extends ConsumerWidget {
               title: const Text('Export & Import'),
               subtitle: const Text('Transfer your progress'),
               trailing: const Icon(Icons.chevron_right),
-              onTap: () => Navigator.of(context).pushNamed('/export'),
+              onTap: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Export & Import coming soon')),
+                );
+              },
             ),
           ),
           const SizedBox(height: 24),

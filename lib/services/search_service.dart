@@ -14,7 +14,7 @@ import 'package:docklands_dojo/models/technique.dart';
 /// 1. **Exact match** — direct substring on japaneseName, englishName, romajiName
 /// 2. **Normalization** — strip macrons (ō→o, ū→u), hyphens, collapse whitespace
 /// 3. **Romanization canonical mapping** — Kunrei→Hepburn (si→shi, ti→chi, etc.)
-/// 4. **Levenshtein distance** — threshold ≤ 2 on normalized strings
+/// 4. **Levenshtein similarity** — threshold ≥ 80% on normalized strings
 ///
 /// See PRD Section 3, F2: Fuzzy Matching Specification.
 class SearchService {
@@ -183,9 +183,11 @@ class SearchService {
         continue;
       }
 
-      // Layer 4: Levenshtein distance ≤ 2.
+      // Layer 4: Levenshtein similarity ≥ 80% (PRD spec).
       final distance = levenshteinDistance(queryCanon, targetCanon);
-      if (distance <= 2) {
+      final maxLen = math.max(queryCanon.length, targetCanon.length);
+      final similarity = maxLen > 0 ? 1.0 - (distance / maxLen) : 0.0;
+      if (similarity >= 0.8) {
         bestScore = _min(bestScore, 3);
       }
     }

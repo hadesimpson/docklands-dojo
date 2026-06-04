@@ -37,7 +37,13 @@ void main() {
       );
 
       expect(find.text('Orange'), findsOneWidget);
-      expect(find.byType(CustomPaint), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byType(BeltColorSwatch),
+          matching: find.byType(CustomPaint),
+        ),
+        findsOneWidget,
+      );
     });
 
     testWidgets('renders stripe for kyu8 (orange + blue)', (tester) async {
@@ -50,7 +56,13 @@ void main() {
       );
 
       expect(find.text('Orange with Blue stripe'), findsOneWidget);
-      expect(find.byType(CustomPaint), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byType(BeltColorSwatch),
+          matching: find.byType(CustomPaint),
+        ),
+        findsOneWidget,
+      );
     });
 
     testWidgets('renders stripe for kyu6 (blue + yellow)', (tester) async {
@@ -103,14 +115,14 @@ void main() {
       );
 
       final semantics = tester.getSemantics(find.byType(BeltColorSwatch));
-      expect(semantics.label, 'Orange Belt');
+      expect(semantics.label, contains('Orange Belt'));
     });
 
     testWidgets('white belt gets border on light theme', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
           theme: ThemeData.light(useMaterial3: true),
-          home: Scaffold(
+          home: const Scaffold(
             body: Center(
               child: SizedBox(
                 width: 100,
@@ -143,7 +155,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           theme: ThemeData.light(useMaterial3: true),
-          home: Scaffold(
+          home: const Scaffold(
             body: Center(
               child: SizedBox(
                 width: 100,

@@ -68,7 +68,7 @@ class _BeltTimeline extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final belts = BeltRank.values;
+    const belts = BeltRank.values;
 
     return ListView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -292,7 +292,7 @@ class _BeltTimelineItem extends StatelessWidget {
 
     // Glow effect for current belt.
     if (isCurrent) {
-      return Container(
+      return DecoratedBox(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(14),
           boxShadow: [

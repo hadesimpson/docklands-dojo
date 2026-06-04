@@ -120,7 +120,7 @@ void main() {
       // Verify sessions.
       final sessionsList = decoded['sessions'] as List;
       expect(sessionsList, hasLength(1));
-      expect(sessionsList[0]['durationMinutes'], 90);
+      expect(sessionsList[0]['durationSeconds'], 5400);
       expect(sessionsList[0]['notes'], 'Kata focus');
 
       // Verify card states.

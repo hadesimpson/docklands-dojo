@@ -85,6 +85,7 @@ class _TechniqueLibraryScreenState extends State<TechniqueLibraryScreen>
                 suffixIcon: _searchQuery.isNotEmpty
                     ? IconButton(
                         icon: const Icon(Icons.clear),
+                        tooltip: 'Clear search',
                         onPressed: _searchController.clear,
                       )
                     : null,

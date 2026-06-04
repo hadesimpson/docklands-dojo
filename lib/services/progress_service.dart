@@ -192,7 +192,15 @@ class ProgressService {
   /// Calculates completion percentage for the given [rank].
   ///
   /// Returns a value from 0.0 to 1.0 based on the ratio of mastered
-  /// techniques (both kihon and kata) to total required techniques.
+  /// techniques (kihon, kata, terminology, and ido geiko) to total
+  /// required items.
+  ///
+  /// Fitness requirements are physical minimums (push-ups, sit-ups, etc.)
+  /// without technique IDs, so they are validated separately in
+  /// [canAdvanceTo] rather than tracked as completed techniques.
+  ///
+  /// Kumite requirements are also validated separately as they represent
+  /// sparring round counts rather than individual technique mastery.
   ///
   /// Returns 0.0 if the rank has no requirements or no progress exists.
   double calculateCompletionPercentage(
@@ -205,6 +213,8 @@ class ProgressService {
     final allRequired = [
       ...requirement.requiredKihon,
       ...requirement.requiredKata,
+      ...requirement.terminology,
+      ...requirement.idoGeiko,
     ];
     if (allRequired.isEmpty) return 0.0;
 
@@ -259,10 +269,17 @@ class ProgressService {
   /// Advances the user's belt to the given [to] rank.
   ///
   /// Records a [BeltAdvancement] event and updates the current rank.
-  /// Does NOT validate prerequisites — call [canAdvanceTo] first.
+  /// Validates prerequisites via [canAdvanceTo] before proceeding.
   ///
   /// Optionally accepts [notes] about the grading.
   Future<Result<void>> advanceBelt(BeltRank to, {String? notes}) async {
+    // Validate prerequisites before allowing advancement.
+    final canAdvance = await canAdvanceTo(to);
+    if (canAdvance is Failure) return canAdvance;
+    if (canAdvance is Success<bool> && !canAdvance.data) {
+      return const Failure('Prerequisites not met for belt advancement');
+    }
+
     try {
       final progressResult = await getCurrentProgress();
       switch (progressResult) {

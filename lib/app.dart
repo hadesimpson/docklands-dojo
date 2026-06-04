@@ -174,9 +174,7 @@ class _NavigationShellState extends State<NavigationShell> {
         label: 'Main navigation',
         child: NavigationBar(
           selectedIndex: _currentIndex,
-          onDestinationSelected: (index) {
-            switchTab(index);
-          },
+          onDestinationSelected: switchTab,
           destinations: const [
             NavigationDestination(
               icon: Icon(Icons.home_outlined),

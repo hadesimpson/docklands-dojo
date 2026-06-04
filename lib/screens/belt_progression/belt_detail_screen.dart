@@ -109,29 +109,27 @@ class _BeltDetailContent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
-
     // Build tab list dynamically based on available content.
     final tabs = <_TabData>[];
 
     if (requirement.requiredKihon.isNotEmpty) {
-      tabs.add(_TabData(label: 'Kihon', icon: Icons.sports_martial_arts));
+      tabs.add(const _TabData(label: 'Kihon', icon: Icons.sports_martial_arts));
     }
 
     if (requirement.requiredKata.isNotEmpty) {
-      tabs.add(_TabData(label: 'Kata', icon: Icons.self_improvement));
+      tabs.add(const _TabData(label: 'Kata', icon: Icons.self_improvement));
     }
 
     if (requirement.kumiteRequirements.isNotEmpty) {
-      tabs.add(_TabData(label: 'Kumite', icon: Icons.people));
+      tabs.add(const _TabData(label: 'Kumite', icon: Icons.people));
     }
 
     if (requirement.fitnessRequirements.isNotEmpty) {
-      tabs.add(_TabData(label: 'Fitness', icon: Icons.fitness_center));
+      tabs.add(const _TabData(label: 'Fitness', icon: Icons.fitness_center));
     }
 
     if (requirement.terminology.isNotEmpty) {
-      tabs.add(_TabData(label: 'Terms', icon: Icons.translate));
+      tabs.add(const _TabData(label: 'Terms', icon: Icons.translate));
     }
 
     return DefaultTabController(

@@ -2,7 +2,6 @@ import 'package:docklands_dojo/models/belt_rank.dart';
 import 'package:docklands_dojo/models/user_progress.dart';
 import 'package:docklands_dojo/providers/progress_providers.dart';
 import 'package:docklands_dojo/screens/home/dashboard_card.dart';
-import 'package:docklands_dojo/theme/dojo_colors.dart';
 import 'package:docklands_dojo/widgets/belt_color_swatch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -59,7 +58,7 @@ class HomeScreen extends ConsumerWidget {
             icon: Icons.style,
             title: 'Due for Review',
             subtitle: 'Tap to start flashcard review',
-            iconColor: DojoColors.accentLight,
+            iconColor: theme.colorScheme.tertiary,
           ),
           const SizedBox(height: 8),
 
@@ -68,7 +67,7 @@ class HomeScreen extends ConsumerWidget {
             icon: Icons.quiz,
             title: 'Quick Quiz',
             subtitle: 'Test your knowledge for ${currentRank.displayName}',
-            iconColor: DojoColors.secondaryLight,
+            iconColor: theme.colorScheme.secondary,
           ),
           const SizedBox(height: 8),
 
@@ -85,14 +84,14 @@ class HomeScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 8),
 
-          DashboardCard(
+          const DashboardCard(
             icon: Icons.military_tech,
             title: 'Belt Progression',
             subtitle: 'View all belt requirements',
           ),
           const SizedBox(height: 8),
 
-          DashboardCard(
+          const DashboardCard(
             icon: Icons.book,
             title: 'Technique Library',
             subtitle: 'Browse all techniques',
@@ -103,7 +102,7 @@ class HomeScreen extends ConsumerWidget {
             icon: Icons.settings,
             title: 'Settings',
             subtitle: 'Theme, export/import, about',
-            iconColor: Colors.grey,
+            iconColor: theme.colorScheme.outline,
           ),
         ],
       ),
@@ -178,11 +177,11 @@ class HomeScreen extends ConsumerWidget {
     final nextRank = BeltRank.values.where((r) => r.order > currentOrder);
 
     if (nextRank.isEmpty) {
-      return const DashboardCard(
+      return DashboardCard(
         icon: Icons.emoji_events,
         title: 'Shodan Achieved!',
         subtitle: 'You have reached the highest tracked rank',
-        iconColor: DojoColors.tertiaryLight,
+        iconColor: theme.colorScheme.tertiary,
       );
     }
 
@@ -191,14 +190,14 @@ class HomeScreen extends ConsumerWidget {
     final percentText = completionAsync.when(
       data: (pct) => '${(pct * 100).toStringAsFixed(0)}% complete',
       loading: () => 'Loading...',
-      error: (_, __) => 'Unable to load',
+      error: (_, _) => 'Unable to load',
     );
 
     return DashboardCard(
       icon: Icons.trending_up,
       title: 'Next: ${next.displayName}',
       subtitle: percentText,
-      iconColor: DojoColors.tertiaryLight,
+      iconColor: theme.colorScheme.tertiary,
       trailing: completionAsync.when(
         data: (pct) => SizedBox(
           width: 40,
@@ -207,7 +206,7 @@ class HomeScreen extends ConsumerWidget {
             value: pct,
             strokeWidth: 3,
             backgroundColor: theme.colorScheme.surfaceContainerHighest,
-            color: DojoColors.tertiaryLight,
+            color: theme.colorScheme.tertiary,
           ),
         ),
         loading: () => const SizedBox(
@@ -215,7 +214,7 @@ class HomeScreen extends ConsumerWidget {
           height: 20,
           child: CircularProgressIndicator(strokeWidth: 2),
         ),
-        error: (_, __) => const Icon(Icons.error_outline, size: 20),
+        error: (_, _) => const Icon(Icons.error_outline, size: 20),
       ),
     );
   }

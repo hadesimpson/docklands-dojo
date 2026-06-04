@@ -360,7 +360,7 @@ class ExportService {
 
   Map<String, dynamic> _serializeSession(TrainingSession session) => {
     'date': session.date.toUtc().toIso8601String(),
-    'durationMinutes': session.duration.inMinutes,
+    'durationSeconds': session.duration.inSeconds,
     'notes': session.notes,
   };
 
@@ -498,12 +498,17 @@ class ExportService {
         date = DateTime.now();
       }
 
-      final durationMinutes = map['durationMinutes'] as int? ?? 0;
+      // Prefer durationSeconds; fall back to durationMinutes for old exports.
+      final durationSeconds = map['durationSeconds'] as int?;
+      final durationMinutes = map['durationMinutes'] as int?;
+      final duration = durationSeconds != null
+          ? Duration(seconds: durationSeconds)
+          : Duration(minutes: durationMinutes ?? 0);
 
       return Success(
         TrainingSession(
           date: date,
-          duration: Duration(minutes: durationMinutes),
+          duration: duration,
           notes: map['notes'] as String?,
         ),
       );
@@ -547,6 +552,13 @@ class ExportService {
       final totalReviews = map['totalReviews'] as int? ?? 0;
       final correctReviews = map['correctReviews'] as int? ?? 0;
 
+      final clampedTotalReviews = totalReviews < 0 ? 0 : totalReviews;
+      final clampedCorrectReviews = correctReviews < 0
+          ? 0
+          : (correctReviews > clampedTotalReviews
+                ? clampedTotalReviews
+                : correctReviews);
+
       return Success(
         CardReviewState(
           cardId: cardId,
@@ -555,8 +567,8 @@ class ExportService {
           repetitions: repetitions < 0 ? 0 : repetitions,
           nextReviewDate: nextReviewDate,
           lastReviewDate: lastReviewDate,
-          totalReviews: totalReviews < 0 ? 0 : totalReviews,
-          correctReviews: correctReviews < 0 ? 0 : correctReviews,
+          totalReviews: clampedTotalReviews,
+          correctReviews: clampedCorrectReviews,
         ),
       );
     } catch (e) {

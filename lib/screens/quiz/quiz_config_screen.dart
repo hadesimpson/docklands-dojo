@@ -111,7 +111,7 @@ class _QuizConfigScreenState extends State<QuizConfigScreen> {
                       Semantics(
                         label: 'Select target belt rank',
                         child: DropdownButtonFormField<BeltRank>(
-                          value: _selectedRank,
+                          initialValue: _selectedRank,
                           decoration: const InputDecoration(
                             prefixIcon: Icon(Icons.military_tech),
                           ),
