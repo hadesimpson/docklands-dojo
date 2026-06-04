@@ -11,6 +11,9 @@ A Kyokushin Karate training app built with Flutter — track belt progression, m
 - **Spaced Repetition** — SM-2 algorithm flashcards for terminology mastery
 - **Grading Quizzes** — Self-assessment with mock exam mode and readiness tracking
 - **Data Export/Import** — Progress portability via JSON export
+- **Dark Mode** — System, light, and dark theme toggle via settings
+- **Accessibility** — Semantic labels on all interactive elements, text labels for all color indicators
+- **Home Dashboard** — Quick access to review, quiz, belt progression, and technique library
 
 ## Architecture
 

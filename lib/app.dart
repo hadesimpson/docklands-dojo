@@ -1,13 +1,16 @@
 import 'package:docklands_dojo/models/belt_rank.dart';
 import 'package:docklands_dojo/models/quiz.dart';
+import 'package:docklands_dojo/providers/theme_provider.dart';
 import 'package:docklands_dojo/screens/belt_progression/belt_detail_screen.dart';
 import 'package:docklands_dojo/screens/belt_progression/belt_list_screen.dart';
 import 'package:docklands_dojo/screens/home/home_screen.dart';
 import 'package:docklands_dojo/screens/quiz/quiz_config_screen.dart';
 import 'package:docklands_dojo/screens/quiz/quiz_screen.dart';
 import 'package:docklands_dojo/screens/review/flashcard_screen.dart';
+import 'package:docklands_dojo/screens/settings/settings_screen.dart';
 import 'package:docklands_dojo/screens/technique/technique_library_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'theme/dojo_theme.dart';
@@ -16,7 +19,10 @@ import 'theme/dojo_theme.dart';
 ///
 /// Configures [MaterialApp.router] with [GoRouter] for declarative
 /// navigation and the Dojo Material 3 theme (light + dark).
-class DojoApp extends StatelessWidget {
+///
+/// Watches [themeModeProvider] to reactively switch between
+/// system, light, and dark modes.
+class DojoApp extends ConsumerWidget {
   /// Optional router override for testing.
   final GoRouter? router;
 
@@ -24,13 +30,15 @@ class DojoApp extends StatelessWidget {
   const DojoApp({this.router, super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeModeProvider);
+
     return MaterialApp.router(
       title: 'Docklands Dojo',
       debugShowCheckedModeBanner: false,
       theme: DojoTheme.light(),
       darkTheme: DojoTheme.dark(),
-      themeMode: ThemeMode.system,
+      themeMode: themeMode,
       routerConfig: router ?? dojoRouter,
     );
   }
@@ -47,7 +55,7 @@ final _shellNavigatorKey = GlobalKey<NavigatorState>();
 /// Uses a [ShellRoute] for bottom navigation with 4 tabs:
 /// Home, Techniques, Review, and Progress (Belt Progression).
 ///
-/// Additional routes for quiz, settings, and onboarding are
+/// Additional routes for quiz, settings, and belt detail are
 /// defined outside the shell.
 final GoRouter dojoRouter = GoRouter(
   navigatorKey: _rootNavigatorKey,
@@ -120,7 +128,7 @@ final GoRouter dojoRouter = GoRouter(
     GoRoute(
       path: '/settings',
       parentNavigatorKey: _rootNavigatorKey,
-      builder: (context, state) => const SettingsPlaceholder(),
+      builder: (context, state) => const SettingsScreen(),
     ),
   ],
 );
@@ -193,22 +201,6 @@ class _NavigationShellState extends State<NavigationShell> {
           ],
         ),
       ),
-    );
-  }
-}
-
-/// Temporary placeholder for the settings screen.
-///
-/// Will be fully implemented in CL14 with dark mode toggle.
-class SettingsPlaceholder extends StatelessWidget {
-  /// Creates a [SettingsPlaceholder].
-  const SettingsPlaceholder({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Settings')),
-      body: const Center(child: Text('Settings — coming in CL14')),
     );
   }
 }
