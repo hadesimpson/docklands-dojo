@@ -2,6 +2,7 @@ import 'package:docklands_dojo/data/syllabus_data.dart';
 import 'package:docklands_dojo/models/belt_rank.dart';
 import 'package:docklands_dojo/models/user_progress.dart';
 import 'package:docklands_dojo/providers/progress_providers.dart';
+import 'package:docklands_dojo/result.dart';
 import 'package:docklands_dojo/screens/belt_progression/belt_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -207,19 +208,21 @@ class _MockProgressNotifier extends AsyncNotifier<UserProgress?>
   Future<UserProgress?> build() async => _progress;
 
   @override
-  Future<dynamic> markTechniqueCompleted(String techniqueId) async {}
+  Future<Result<void>> markTechniqueCompleted(String techniqueId) async =>
+      Success(null);
 
   @override
-  Future<dynamic> updateBelt(BeltRank rank) async {}
+  Future<Result<void>> updateBelt(BeltRank rank) async => Success(null);
 
   @override
-  Future<dynamic> addTrainingSession(
+  Future<Result<void>> addTrainingSession(
     Duration duration, {
     String? notes,
-  }) async {}
+  }) async => Success(null);
 
   @override
-  Future<dynamic> advanceBelt(BeltRank rank, {String? notes}) async {}
+  Future<Result<void>> advanceBelt(BeltRank rank, {String? notes}) async =>
+      Success(null);
 }
 
 /// Mock notifier that stays in loading state.
@@ -233,19 +236,21 @@ class _LoadingProgressNotifier extends AsyncNotifier<UserProgress?>
   }
 
   @override
-  Future<dynamic> markTechniqueCompleted(String techniqueId) async {}
+  Future<Result<void>> markTechniqueCompleted(String techniqueId) async =>
+      Success(null);
 
   @override
-  Future<dynamic> updateBelt(BeltRank rank) async {}
+  Future<Result<void>> updateBelt(BeltRank rank) async => Success(null);
 
   @override
-  Future<dynamic> addTrainingSession(
+  Future<Result<void>> addTrainingSession(
     Duration duration, {
     String? notes,
-  }) async {}
+  }) async => Success(null);
 
   @override
-  Future<dynamic> advanceBelt(BeltRank rank, {String? notes}) async {}
+  Future<Result<void>> advanceBelt(BeltRank rank, {String? notes}) async =>
+      Success(null);
 }
 
 /// Mock notifier that throws an error.
@@ -257,17 +262,19 @@ class _ErrorProgressNotifier extends AsyncNotifier<UserProgress?>
   }
 
   @override
-  Future<dynamic> markTechniqueCompleted(String techniqueId) async {}
+  Future<Result<void>> markTechniqueCompleted(String techniqueId) async =>
+      Success(null);
 
   @override
-  Future<dynamic> updateBelt(BeltRank rank) async {}
+  Future<Result<void>> updateBelt(BeltRank rank) async => Success(null);
 
   @override
-  Future<dynamic> addTrainingSession(
+  Future<Result<void>> addTrainingSession(
     Duration duration, {
     String? notes,
-  }) async {}
+  }) async => Success(null);
 
   @override
-  Future<dynamic> advanceBelt(BeltRank rank, {String? notes}) async {}
+  Future<Result<void>> advanceBelt(BeltRank rank, {String? notes}) async =>
+      Success(null);
 }
